@@ -66,6 +66,25 @@ print(my_list[:])
 # ImportError
 """
 from math import PI
+explanation: When you try to use a function or parameter that doesn't exist within a module
 """
 from math import pi
 print(pi)
+
+
+# ValueError
+"""
+my_int = int("10 years")
+explanation: This error occurs when you try to convert a string to an integer,
+but the string contains characters that can't be interpreted as a valid integer 
+(e.g., non-numeric characters like letters or symbols).
+"""
+my_int = int("10")
+print(my_int)
+
+# ZeroDivisionError
+"""
+print(4/0)
+explanation: This error occurs when you try to divide a number by zero, which is mathematically undefined.
+"""
+print(4/2)
