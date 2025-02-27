@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import products, users  # Including routers in the FastAPI application
+from routers import products, users, basic_auth_users, jwt_auth_users, users_db
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
@@ -7,13 +7,17 @@ app = FastAPI()
 # Routers
 app.include_router(products.router)  # Includes the 'products' router, which handles product-related endpoints.
 app.include_router(users.router) # Includes the 'users' router, which manages user-related endpoints.
+app.include_router(basic_auth_users.router)
+app.include_router(jwt_auth_users.router)
+app.include_router(users_db.router)
 
 # Static Resources
-app.mount(
-    "/static",  # URL path where the static files will be accessible (e.g., /static/style.css).
-    StaticFiles(directory="static"),  # Specifies the directory ("static") where static files are stored.
-    name='static'  # Optional name for this mounted route, useful for reference and debugging.
-)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# URL path where the static files will be accessible (e.g., /static/style.css).
+# Specifies the directory ("static") where static files are stored.
+# Optional name for this mounted route, useful for reference and debugging.
+
 
 @app.get("/")
 async def root():
@@ -35,5 +39,11 @@ The `--reload` flag enables automatic reloading for code changes.
 
 Documemtation with Swagger: https://127.0.0.1:8000/docs
 Documemtation with Redocly: https://127.0.0.1:8000/redoc
+
+to Deactivate MongoDB
+net stop MongoDB
+
+To activate MongoDB 
+net start MongoDB
 
 """
