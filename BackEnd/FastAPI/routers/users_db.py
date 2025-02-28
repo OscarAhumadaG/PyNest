@@ -12,7 +12,7 @@ router = APIRouter(prefix="/userdb",
 
 @router.get("/", response_model=list[User])
 async def users():
-    return users_schema(db_client.local.users.find())
+    return users_schema(db_client.users.find())
 
 
 
@@ -39,9 +39,9 @@ async def user(user: User):
     user_dict = dict(user)
     del user_dict["id"]
 
-    id = db_client.local.users.insert_one(user_dict).inserted_id
+    id = db_client.users.insert_one(user_dict).inserted_id
 
-    new_user = user_schema(db_client.local.users.find_one({"_id": id}))
+    new_user = user_schema(db_client.users.find_one({"_id": id}))
 
     return User(**new_user)
 
@@ -53,7 +53,7 @@ async def user(user: User):
     update_operation = {"$set": user_dict}
 
     try:
-        updated_user = db_client.local.users.update_one(query_filter, update_operation)
+        updated_user = db_client.users.update_one(query_filter, update_operation)
 
         if updated_user.matched_count == 0:  # System was unable to find the user
             raise HTTPException(status_code=404, detail="User not found")
@@ -75,7 +75,7 @@ async def delete_user(id: str):
         object_id = ObjectId(str_id)
 
         # Attempt to delete the user from the collection
-        result = db_client.local.users.delete_one({"_id": object_id})
+        result = db_client.users.delete_one({"_id": object_id})
 
         # Check if any user was deleted
         if result.deleted_count == 0:
@@ -96,7 +96,7 @@ def search_user(field: str, key):
     try:
         if field == "_id":
             key = ObjectId(key)  # Convert string to ObjectId
-        user = db_client.local.users.find_one({field: key})
+        user = db_client.users.find_one({field: key})
         return User(**user_schema(user)) if user else None
     except Exception as e:
         return None

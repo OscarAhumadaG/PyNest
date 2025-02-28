@@ -46,4 +46,13 @@ net stop MongoDB
 To activate MongoDB 
 net start MongoDB
 
+To disable completely MongoDB 
+sc config MongoDB start= disabled
+
+To disable completely MongoDB 
+sc config MongoDB start= auto
+
+To create the requirements.txt with all the python packages of my project
+pip freeze > requirements.txt
+
 """
