@@ -21,7 +21,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def root():
-    return "Hello FastAPI!"
+    return "Hello FastAPI, I'm learning fast!"
 
 @app.get("/url_oscar")
 async def url():
@@ -55,4 +55,9 @@ sc config MongoDB start= auto
 To create the requirements.txt with all the python packages of my project
 pip freeze > requirements.txt
 
+Create the docker images:
+docker build -t usersfastapi . 
+
+create the docker container
+docker run --rm -p 8000:8000 usersfastapi
 """
