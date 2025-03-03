@@ -1,0 +1,97 @@
+FastAPI Users App
+🏗️ User Management API with FastAPI, MongoDB, and Authentication
+📌 Description
+This is an API built with FastAPI that allows user management with Basic Auth and JWT authentication, using MongoDB as the database and Docker for easy deployment.
+
+📂 Project Structure
+FastAPI/
+│── db/
+│   ├── models/        # Database models
+│   ├── schemas/       # Data schemas
+│   ├── client.py      # MongoDB connection
+│── routers/
+│   ├── basic_auth_users.py  # Routes with Basic Auth
+│   ├── jwt_auth_users.py    # Routes with JWT
+│   ├── products.py          # Example of protected routes
+│   ├── users.py             # User routes
+│── static/                  # Static files
+│── main.py                   # Main FastAPI file
+│── requirements.txt          # Project dependencies
+│── Dockerfile                # Docker configuration
+│── compose.yml               # Docker Compose configuration
+│── .dockerignore             # Files ignored by Docker
+│── README.md                 # Project documentation
+
+
+🚀 Run with Docker Hub Image
+You can directly use the pre-built image from Docker Hub without cloning the repository:
+docker run --rm -it -p 8000:8000 oahumada/usersfastapi
+This will pull the image from Docker Hub and start the FastAPI server at http://localhost:8000.
+
+
+2️⃣ Set Up Environment Variables
+Create a .env file with the required credentials:
+MONGO_URI=mongodb://mongo:27017
+JWT_SECRET=your_super_secret_key
+
+3️⃣ Build and Run with Docker
+docker compose up --build
+
+This will start:
+
+MongoDB on port 27017
+FastAPI on http://localhost:8000
+
+🧑‍💻 API Usage
+📜 Interactive Documentation
+Access the automatically generated FastAPI documentation at:
+
+🔹 Swagger UI: http://localhost:8000/docs
+🔹 Redoc: http://localhost:8000/redoc
+
+🔑 Authentication Methods
+🟢 1. Basic Auth
+Authentication via username and password in the request header.
+Request Example
+GET /protected-route HTTP/1.1
+Host: localhost:8000
+Authorization: Basic base64(username:password)
+
+🔵 2. JWT Auth
+Authentication using JWT tokens for added security.
+
+Get a Token
+
+POST /token
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "password123"
+}
+
+Access a Protected Route
+GET /protected-route HTTP/1.1
+Host: localhost:8000
+Authorization: Bearer <your_token_here>
+
+📌 Main Endpoints
+🏠 Users
+Method	Route	Description	Auth
+POST	/register	Register a user	❌
+POST	/token	Get JWT token	❌
+GET	/users/me	Get user information	✅
+🔒 Protected with Authentication
+Method	Route	Auth Type
+GET	/protected-basic	Basic Auth
+GET	/protected-jwt	JWT Auth
+📦 Technologies Used
+✅ FastAPI - Python framework for APIs
+✅ MongoDB - NoSQL database
+✅ Docker - Containerization
+✅ JWT & Basic Auth - Authentication methods
+
+💡 Contributions
+If you'd like to improve this project, feel free to fork, create a new branch, and submit a Pull Request. 🙌
+
+📌 Author: Oscar A.
